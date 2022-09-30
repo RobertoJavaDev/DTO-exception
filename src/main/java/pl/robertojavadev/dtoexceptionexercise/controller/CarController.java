@@ -22,15 +22,7 @@ public class CarController {
     }
 
     @GetMapping("{id}")
-<<<<<<< HEAD
     public Optional<CarDTO> getCar(@PathVariable Long id) {
-=======
-<<<<<<< HEAD
-    public Car getCar(@PathVariable Long id) {
-=======
-    public Optional<CarDTO> getCar(@PathVariable Long id) {
->>>>>>> 955a673 (implemented DTO mapStructure to getCarById)
->>>>>>> DTO
         return carService.getCar(id);
     }
 
