@@ -26,8 +26,18 @@ public class CarService {
                 .collect(Collectors.toList());
     }
 
+<<<<<<< HEAD
     public Optional<CarDTO> getCar(Long id) {
         return carRepository.findById(id).map(carMapper::map);
+=======
+<<<<<<< HEAD
+    public Car getCar(Long id) {
+        return carRepository.getById(id);
+=======
+    public Optional<CarDTO> getCar(Long id) {
+        return carRepository.findById(id).map(carMapper::map);
+>>>>>>> 955a673 (implemented DTO mapStructure to getCarById)
+>>>>>>> DTO
     }
 
     public Car createCar(Car carRequest) {
