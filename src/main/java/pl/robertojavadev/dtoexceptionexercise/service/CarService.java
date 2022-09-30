@@ -4,9 +4,12 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import pl.robertojavadev.dtoexceptionexercise.domain.model.Car;
 import pl.robertojavadev.dtoexceptionexercise.domain.respository.CarRepository;
+import pl.robertojavadev.dtoexceptionexercise.dto.CarDTO;
+import pl.robertojavadev.dtoexceptionexercise.dto.CarMapper;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -14,12 +17,17 @@ public class CarService {
 
     private final CarRepository carRepository;
 
-    public List<Car> getAllCars() {
-        return carRepository.findAll();
+    private final CarMapper carMapper;
+
+    public List<CarDTO> getAllCars() {
+        return carRepository.findAll()
+                .stream()
+                .map(carMapper::map)
+                .collect(Collectors.toList());
     }
 
-    public Car getCar(Long id) {
-        return carRepository.getById(id);
+    public Optional<Car> getCar(Long id) {
+        return carRepository.findById(id);
     }
 
     public Car createCar(Car carRequest) {

@@ -3,9 +3,11 @@ package pl.robertojavadev.dtoexceptionexercise.controller;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import pl.robertojavadev.dtoexceptionexercise.domain.model.Car;
+import pl.robertojavadev.dtoexceptionexercise.dto.CarDTO;
 import pl.robertojavadev.dtoexceptionexercise.service.CarService;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @AllArgsConstructor
@@ -15,12 +17,12 @@ public class CarController {
     private final CarService carService;
 
     @GetMapping
-    public List<Car> getAllCars() {
+    public List<CarDTO> getAllCars() {
         return carService.getAllCars();
     }
 
     @GetMapping("{id}")
-    public Car getCar(@PathVariable Long id) {
+    public Optional<Car> getCar(@PathVariable Long id) {
         return carService.getCar(id);
     }
 
