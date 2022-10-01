@@ -17,4 +17,14 @@ public class Car {
     String productionYear;
     String productionCountry;
     boolean available;
+
+    public Car(String name, String production, String country, Boolean available) {
+        this.name = name;
+        this.productionYear = production;
+        this.productionCountry = country;
+        this.available = available;
+    }
+
+    public Car() {
+    }
 }

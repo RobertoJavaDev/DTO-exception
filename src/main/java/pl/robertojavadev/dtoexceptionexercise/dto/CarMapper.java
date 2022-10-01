@@ -6,6 +6,10 @@ import pl.robertojavadev.dtoexceptionexercise.domain.model.Car;
 @Mapper(componentModel = "spring")
 public interface CarMapper {
 
-    Car map(CarDTO carDTO);
-    CarDTO map(Car car);
+    Car map(GetCarDTO getCarDTO);
+    GetCarDTO map(Car car);
+
+    Car mapping(CarDTO carDTO);
+
+    CarDTO mapping(Car car);
 }
