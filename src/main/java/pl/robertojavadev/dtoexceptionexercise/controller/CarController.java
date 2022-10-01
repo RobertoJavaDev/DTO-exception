@@ -4,9 +4,9 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import pl.robertojavadev.dtoexceptionexercise.domain.model.Car;
 import pl.robertojavadev.dtoexceptionexercise.dto.CarDTO;
 import pl.robertojavadev.dtoexceptionexercise.dto.GetCarDTO;
+import pl.robertojavadev.dtoexceptionexercise.service.CarService;
 import pl.robertojavadev.dtoexceptionexercise.service.CarServiceImpl;
 
 import java.util.List;
@@ -17,16 +17,17 @@ import java.util.Optional;
 @RequestMapping("cars")
 public class CarController {
 
-    private final CarServiceImpl carService;
+    private final CarService carService;
+    private final CarServiceImpl carServiceImpl;
 
     @GetMapping("/all")
     public ResponseEntity<List<GetCarDTO>> getAllCars() {
-        return new ResponseEntity<>(carService.getAllCars(), HttpStatus.OK);
+        return new ResponseEntity<>(carServiceImpl.getAllCars(), HttpStatus.OK);
     }
 
     @GetMapping("/car/{id}")
-    public ResponseEntity<Optional<GetCarDTO>> getCar(@PathVariable Long id) {
-        return new ResponseEntity<>(carService.getCar(id),HttpStatus.OK);
+    public ResponseEntity<GetCarDTO> getCar(@PathVariable Long id) {
+        return new ResponseEntity<>(carServiceImpl.getCar(id),HttpStatus.OK);
     }
 
     @PostMapping("/save")
@@ -42,6 +43,6 @@ public class CarController {
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> deleteCar(@PathVariable Long id){
         carService.deleteCar(id);
-        return new ResponseEntity<>(HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
