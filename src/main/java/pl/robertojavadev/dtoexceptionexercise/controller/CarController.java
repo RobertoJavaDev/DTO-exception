@@ -1,6 +1,8 @@
 package pl.robertojavadev.dtoexceptionexercise.controller;
 
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.robertojavadev.dtoexceptionexercise.domain.model.Car;
 import pl.robertojavadev.dtoexceptionexercise.dto.CarDTO;
@@ -17,28 +19,29 @@ public class CarController {
 
     private final CarServiceImpl carService;
 
-    @GetMapping
-    public List<GetCarDTO> getAllCars() {
-        return carService.getAllCars();
+    @GetMapping("/all")
+    public ResponseEntity<List<GetCarDTO>> getAllCars() {
+        return new ResponseEntity<>(carService.getAllCars(), HttpStatus.OK);
     }
 
-    @GetMapping("{id}")
-    public Optional<GetCarDTO> getCar(@PathVariable Long id) {
-        return carService.getCar(id);
+    @GetMapping("/car/{id}")
+    public ResponseEntity<Optional<GetCarDTO>> getCar(@PathVariable Long id) {
+        return new ResponseEntity<>(carService.getCar(id),HttpStatus.OK);
     }
 
-    @PostMapping
-    public CarDTO creatCar(@RequestBody CarDTO carDTO) {
-        return carService.createCar(carDTO);
+    @PostMapping("/save")
+    public ResponseEntity<CarDTO> creatCar(@RequestBody CarDTO carDTO) {
+        return new ResponseEntity<>(carService.createCar(carDTO), HttpStatus.CREATED);
     }
 
-    @PutMapping("{id}")
-    public CarDTO updateCar(@PathVariable Long id, @RequestBody CarDTO carDTO) {
-        return carService.updateCar(id, carDTO);
+    @PutMapping("/update/{id}")
+    public ResponseEntity<CarDTO> updateCar(@PathVariable Long id, @RequestBody CarDTO carDTO) {
+        return new ResponseEntity<>(carService.updateCar(id, carDTO), HttpStatus.CREATED);
     }
 
-    @DeleteMapping("{id}")
-    public void deleteCar(@PathVariable Long id){
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<Void> deleteCar(@PathVariable Long id){
         carService.deleteCar(id);
+        return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 }
