@@ -7,6 +7,7 @@ import pl.robertojavadev.dtoexceptionexercise.domain.respository.CarRepository;
 import pl.robertojavadev.dtoexceptionexercise.dto.CarDTO;
 import pl.robertojavadev.dtoexceptionexercise.dto.GetCarDTO;
 import pl.robertojavadev.dtoexceptionexercise.dto.CarMapper;
+import pl.robertojavadev.dtoexceptionexercise.exception.EmptyInputException;
 
 import java.util.List;
 import java.util.Optional;
@@ -20,6 +21,8 @@ public class CarServiceImpl implements CarService{
 
     private final CarMapper carMapper;
 
+
+    @Override
     public List<GetCarDTO> getAllCars() {
         return carRepository.findAll()
                 .stream()
@@ -27,8 +30,10 @@ public class CarServiceImpl implements CarService{
                 .collect(Collectors.toList());
     }
 
-    public Optional<GetCarDTO> getCar(Long id) {
-        return carRepository.findById(id).map(carMapper::map);
+    @Override
+    public GetCarDTO getCar(Long id) {
+        Car car = carRepository.findById(id).get();
+        return carMapper.map(car);
     }
 
     @Override
@@ -39,6 +44,9 @@ public class CarServiceImpl implements CarService{
         String country = carDTORequest.getProductionCountry();
         Boolean available = carDTORequest.isAvailable();
         Car car = new Car(name, production, country, available);
+        if (car.getName().isEmpty() || car.getName().length() == 0){
+            throw new EmptyInputException("601", "Input Fields are empty");
+        }
         Car savedCar = carRepository.save(car);
 
         return carMapper.mapping(savedCar);
@@ -59,6 +67,7 @@ public class CarServiceImpl implements CarService{
         return carDTO;
     }
 
+    @Override
     public void deleteCar(Long id) {
         carRepository.deleteById(id);
     }
