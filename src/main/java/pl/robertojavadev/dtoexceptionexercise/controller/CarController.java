@@ -4,7 +4,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import pl.robertojavadev.dtoexceptionexercise.domain.model.Car;
 import pl.robertojavadev.dtoexceptionexercise.dto.CarDTO;
-import pl.robertojavadev.dtoexceptionexercise.service.CarService;
+import pl.robertojavadev.dtoexceptionexercise.dto.GetCarDTO;
+import pl.robertojavadev.dtoexceptionexercise.service.CarServiceImpl;
 
 import java.util.List;
 import java.util.Optional;
@@ -14,26 +15,26 @@ import java.util.Optional;
 @RequestMapping("cars")
 public class CarController {
 
-    private final CarService carService;
+    private final CarServiceImpl carService;
 
     @GetMapping
-    public List<CarDTO> getAllCars() {
+    public List<GetCarDTO> getAllCars() {
         return carService.getAllCars();
     }
 
     @GetMapping("{id}")
-    public Optional<CarDTO> getCar(@PathVariable Long id) {
+    public Optional<GetCarDTO> getCar(@PathVariable Long id) {
         return carService.getCar(id);
     }
 
     @PostMapping
-    public Car creatCar(@RequestBody Car car) {
-        return carService.createCar(car);
+    public CarDTO creatCar(@RequestBody CarDTO carDTO) {
+        return carService.createCar(carDTO);
     }
 
     @PutMapping("{id}")
-    public Car updateCar(@PathVariable Long id, @RequestBody Car car) {
-        return carService.updateCar(id, car);
+    public CarDTO updateCar(@PathVariable Long id, @RequestBody CarDTO carDTO) {
+        return carService.updateCar(id, carDTO);
     }
 
     @DeleteMapping("{id}")
